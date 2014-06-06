@@ -65,7 +65,11 @@ int main()
         unsigned int rowBytes = (double)rgbImage.GetReceivedDataSize()/(double)rgbImage.GetRows();       
         cv::Mat image = cv::Mat(rgbImage.GetRows(), rgbImage.GetCols(), CV_8UC3, rgbImage.GetData(),rowBytes);
         
-        cv::imshow("image", image);
+        cv::Mat flipped_image;
+        
+        cv::flip(image, flipped_image, -1);
+        
+        cv::imshow("image", flipped_image);
         key = cv::waitKey(30);        
     }
     
