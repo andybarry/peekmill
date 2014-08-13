@@ -209,12 +209,9 @@ int main(int argc, char *argv[])
         unsigned int rowBytes = (double)rgbImage.GetReceivedDataSize()/(double)rgbImage.GetRows();       
         cv::Mat image = cv::Mat(rgbImage.GetRows(), rgbImage.GetCols(), CV_8UC3, rgbImage.GetData(),rowBytes);
         
-        cv::Mat flipped_image;
-        
         //cv::flip(image, flipped_image, -1);
         
-        cv::imshow("image", image);
-        key = cv::waitKey(30);    
+           
         
         // convert opencv image into a buffer
         
@@ -226,6 +223,8 @@ int main(int argc, char *argv[])
         
         CV_Assert(grey_mat.type() == CV_8UC1);
         
+        cv::imshow("image", grey_mat);
+        key = cv::waitKey(30); 
         
         int64_t magic = MAGIC;
 

@@ -5,10 +5,20 @@
 
 #include <iostream>
 
+#include "peek-mill-utils.hpp"
+
 using namespace FlyCapture2;
 
-int main()
-{
+int main() {
+    
+    // load camera parameters
+    
+    OpenCvCalibration calibration;
+    
+    LoadCalibration(&calibration);
+    
+    cout << calibration.M1 << calibration.D1 << endl;
+    
     Error error;
     Camera camera;
     CameraInfo camInfo;
@@ -65,11 +75,17 @@ int main()
         unsigned int rowBytes = (double)rgbImage.GetReceivedDataSize()/(double)rgbImage.GetRows();       
         cv::Mat image = cv::Mat(rgbImage.GetRows(), rgbImage.GetCols(), CV_8UC3, rgbImage.GetData(),rowBytes);
         
-        cv::Mat flipped_image;
+        // use calibration to undistort image
+        Mat image_ud;
+        undistort(image, image_ud, calibration.M1, calibration.D1);
         
-        cv::flip(image, flipped_image, -1);
         
-        cv::imshow("image", flipped_image);
+        //cv::Mat flipped_image;
+        
+        //cv::flip(image_ud, flipped_image, -1);
+        
+        cv::imshow("image", image);
+        cv::imshow("image_ud", image_ud);
         key = cv::waitKey(30);        
     }
     

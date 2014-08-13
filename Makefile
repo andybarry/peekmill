@@ -9,11 +9,14 @@ LIBS=-lflycapture `pkg-config --libs opencv`
 
 all: cam-test Tcp_image_streamer
 
-cam-test: cam-test.o
-	$(CC) cam-test.o -o cam-test $(LIBS)
+cam-test: cam-test.o peek-mill-utils.o
+	$(CC) cam-test.o peek-mill-utils.o -o cam-test $(LIBS)
 	
 cam-test.o: cam-test.cpp
 	$(CC) $(CFLAGS) cam-test.cpp
+	
+peek-mill-utils.o: peek-mill-utils.cpp peek-mill-utils.hpp
+	$(CC) $(CFLAGS) peek-mill-utils.cpp
 	
 Tcp_image_streamer: Tcp_image_streamer.o
 	$(CC) Tcp_image_streamer.o -o Tcp_image_streamer $(LIBS)

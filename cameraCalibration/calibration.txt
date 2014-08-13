@@ -1,0 +1,24 @@
+aprilCameraCalibration {
+
+    // MRE:   0.935 px MSE   1.355 px MaxRE   4.139 px MaxERE   0.956 px
+
+    names = [ camera0000 ];
+
+    camera0000 {
+        class = "april.camera.models.AngularPolynomialCalibration";
+
+        width = 1280;
+        height = 960;
+
+        intrinsics {
+            fc = [ 760.808972, 761.702493 ];
+            cc = [ 657.330725, 495.597298 ];
+            kc = [  -0.066777,   0.090040,  -0.139947,   0.065039 ];
+        }
+        extrinsics {
+            // Global-To-Camera coordinate transformation
+            position = [   0.000000,   0.000000,   0.000000 ];
+            rollpitchyaw_degrees = [   0.000000,  -0.000000,   0.000000 ];
+        }
+    }
+}
