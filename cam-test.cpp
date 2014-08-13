@@ -9,6 +9,16 @@
 
 using namespace FlyCapture2;
 
+static void onMouse(int event, int x, int y, int nothing, void* nothing2)
+{
+    // we're writing a mouse handler! so cool!
+    if (event != EVENT_LBUTTONDOWN)
+        return;
+    cout << "you clicked the mouse! (" << x << ", " << y << ")!" << endl;
+    //obvs this needs to be bound to main at some point to do something actually useful
+
+}
+
 int main() {
     
     // load camera parameters
@@ -56,6 +66,9 @@ int main() {
     
     // capture loop
     char key = 0;
+    namedWindow("image_ud");
+    setMouseCallback("image_ud", onMouse, 0);
+
     while(key != 'q')
     {
         // Get the image
@@ -78,6 +91,25 @@ int main() {
         // use calibration to undistort image
         Mat image_ud;
         undistort(image, image_ud, calibration.M1, calibration.D1);
+
+	// nadya starts writing stuff maybe this is what is broken
+	vector<Point3f> world_points;
+	Point3f xyz(1,2,3);
+	world_points.push_back(xyz);
+	world_points.push_back(Point3f(1,2,3));
+
+	vector<Point3f> rvec;
+	Point3f rvec_points(0,0,0);
+	rvec.push_back(rvec_points);
+	// note we're using this for both rvec and tvec bc we're lazy
+
+	vector<Point2f> image_points;
+
+	projectPoints(world_points, rvec, rvec, calibration.M1, calibration.D1, image_points);
+	cout << image_points << endl;
+	
+	// here we are going to start drawing stuff in the image
+	circle(image_ud, image_points.at(0),100, Scalar(156,0,255));
         
         
         //cv::Mat flipped_image;

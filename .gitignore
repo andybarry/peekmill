@@ -1,3 +1,4 @@
 *.o
 Tcp_image_streamer
 cam-test
+*.swp
